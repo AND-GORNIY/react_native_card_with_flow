@@ -4,17 +4,15 @@ import {
   USER_RESPONSE_ERROR,
 } from '../types/types';
 
-import {callAPI} from '../services/ServerRequest';
+import {cardServise} from '../services/cardServise';
 
 export function submCreditCard(userInfo) {
   return dispatch => {
     dispatch({
       type: USER_REQUEST,
     });
-
-    callAPI(userInfo).then(
+    new cardServise().sendCardInfo(userInfo).then(
       data => {
-        // console.log('boom', data);
         dispatch({type: USER_RESPONSE_SUCC, payload: data});
       },
       data => {

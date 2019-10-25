@@ -3,14 +3,7 @@ import {validation} from './validation';
 export const callAPI = data => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const {cardNumber, expirationDate, cvv, firstName, lastName} = data;
-      const result = validation(
-        cardNumber,
-        expirationDate,
-        cvv,
-        firstName,
-        lastName,
-      );
+      const result = validation(data);
       if (result.resultValid) {
         resolve({data, result});
       }
@@ -19,4 +12,8 @@ export const callAPI = data => {
   });
 };
 
-// export default callAPI;
+export class cardServise {
+  sendCardInfo(data) {
+    return callAPI(data);
+  }
+}

@@ -1,10 +1,5 @@
-export const validation = (
-  cardNumber,
-  expirationDate,
-  cvv,
-  firstName,
-  lastName,
-) => {
+export const validation = data => {
+  const {cardNumber, expirationDate, cvv, firstName, lastName} = data;
   let cardNumberValid,
     expirationDateValid,
     cvvValid,
