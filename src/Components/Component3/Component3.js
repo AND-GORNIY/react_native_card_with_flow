@@ -1,11 +1,14 @@
-/* eslint-disable no-shadow */
+//@flow
 import React from 'react';
 import {Text} from 'react-native';
 import {connect} from 'react-redux';
 import {setCardType} from '../../actions/setCardType';
 
-class Component3 extends React.PureComponent {
-  checkCardType = cardNumber => {
+type Props = {cardNumber: string, setCardType(cardNumber: string): string};
+type State = {};
+
+class Component3 extends React.PureComponent<Props, State> {
+  checkCardType = (cardNumber: string): string => {
     let lastFourSymbol = Number(cardNumber.substr(12, 4));
     let type;
     if (lastFourSymbol < 2000) {
@@ -17,8 +20,13 @@ class Component3 extends React.PureComponent {
   };
 
   render() {
+    // eslint-disable-next-line no-shadow
     const {cardNumber, setCardType} = this.props;
-    if (cardNumber !== undefined && cardNumber !== '') {
+    if (
+      cardNumber !== undefined &&
+      cardNumber !== '' &&
+      cardNumber.length === 16
+    ) {
       const type = this.checkCardType(cardNumber);
       setCardType(type);
       return <Text>{type}</Text>;

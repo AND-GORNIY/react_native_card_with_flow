@@ -1,19 +1,30 @@
+//@flow
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 
-class Component2 extends React.Component {
+type Props = {
+  cardNumber: string,
+  expirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+  validationResult: string,
+  cardType: string,
+  isloading: boolean,
+};
+type State = {update: boolean, timerID: any};
+
+class Component2 extends React.Component<Props, State> {
   state = {
     update: false,
     timerID: undefined,
-    startAt: undefined,
   };
 
   startTimer = () => {
     const timerID = setTimeout(() => {
       this.setState({
         update: false,
-        startAt: undefined,
       });
     }, 5000);
 

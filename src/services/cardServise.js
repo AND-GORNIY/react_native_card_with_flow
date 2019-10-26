@@ -1,10 +1,17 @@
+//@flow
 import {validation} from './validation';
 
-export const callAPI = data => {
+export const callAPI = (data: {
+  cardNumber: string,
+  expirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+}): Promise<any> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = validation(data);
-      if (result.resultValid) {
+      if (result.validationResult) {
         resolve({data, result});
       }
       reject({data, result});
@@ -13,7 +20,13 @@ export const callAPI = data => {
 };
 
 export class cardServise {
-  sendCardInfo(data) {
+  sendCardInfo(data: {
+    cardNumber: string,
+    expirationDate: string,
+    cvv: string,
+    firstName: string,
+    lastName: string,
+  }) {
     return callAPI(data);
   }
 }

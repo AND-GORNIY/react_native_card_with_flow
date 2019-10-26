@@ -1,3 +1,4 @@
+//@flow
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -12,7 +13,35 @@ import Component3 from '../Component3/Component3';
 import {connect} from 'react-redux';
 import {submCreditCard} from '../../actions/submCreditCard';
 
-class Component1 extends Component {
+type Props = {
+  validationFields: {
+    cardNumberValid: boolean,
+    expirationDateValid: boolean,
+    cvvValid: boolean,
+    firstNameValid: boolean,
+    lastNameValid: boolean,
+  },
+  animateSpiner: boolean,
+  editableForm: boolean,
+  disabledButtom: boolean,
+  submCreditCard({
+    cardNumber: string,
+    expirationDate: string,
+    cvv: string,
+    firstName: string,
+    lastName: string,
+  }): {type: string, payload?: Object},
+};
+
+type State = {
+  cardNumber: string,
+  expirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+};
+
+class Component1 extends Component<Props, State> {
   state = {
     cardNumber: '',
     expirationDate: '',
@@ -53,8 +82,8 @@ class Component1 extends Component {
         />
 
         <View style={styles.thirdLine}>
-          <View style={styles.thirdLineAlign}>
-            <Text style={[styles.Text, styles.TextCenter]}> EXP. DATE </Text>
+          <View>
+            <Text style={styles.Text}> EXP. DATE </Text>
             <TextInput
               value={this.state.expirationDate}
               onChangeText={expirationDate => this.setState({expirationDate})}
@@ -71,7 +100,7 @@ class Component1 extends Component {
             />
           </View>
 
-          <View style={styles.thirdLineAlign}>
+          <View>
             <Text style={styles.Text}> CVV </Text>
             <TextInput
               value={this.state.cvv}

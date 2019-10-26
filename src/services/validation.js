@@ -1,4 +1,20 @@
-export const validation = data => {
+//@flow
+export const validation = (data: {
+  cardNumber: string,
+  expirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+}): {
+  validationResult: boolean,
+  validationFields: {
+    cardNumberValid: boolean,
+    expirationDateValid: boolean,
+    cvvValid: boolean,
+    firstNameValid: boolean,
+    lastNameValid: boolean,
+  },
+} => {
   const {cardNumber, expirationDate, cvv, firstName, lastName} = data;
   let cardNumberValid,
     expirationDateValid,
@@ -7,7 +23,7 @@ export const validation = data => {
     lastNameValid,
     validationResult;
 
-  const checkDate = val => {
+  const checkDate = (val: string): boolean => {
     if (
       !isNaN(val.slice(0, 2)) &&
       +val.slice(0, 2) < 13 &&

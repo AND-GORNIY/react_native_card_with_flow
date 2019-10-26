@@ -6,12 +6,12 @@ import {
 } from '../types/types';
 
 const initialState = {
-  cardNumber: undefined,
-  expirationDate: undefined,
-  cvv: undefined,
-  firstName: undefined,
-  lastName: undefined,
-  cardType: undefined,
+  cardNumber: '',
+  expirationDate: '',
+  cvv: '',
+  firstName: '',
+  lastName: '',
+  cardType: '',
   validationResult: false,
   validationFields: {
     cardNumberValid: true,
@@ -26,7 +26,29 @@ const initialState = {
   isloading: false,
 };
 
-export const reducerInfo = (state = initialState, action) => {
+export const reducerInfo = (
+  state: {
+    cardNumber: string,
+    expirationDate: string,
+    cvv: string,
+    firstName: string,
+    lastName: string,
+    cardType: string,
+    validationResult: boolean,
+    validationFields: {
+      cardNumberValid: boolean,
+      expirationDateValid: boolean,
+      cvvValid: boolean,
+      firstNameValid: boolean,
+      lastNameValid: boolean,
+    },
+    animateSpiner: boolean,
+    editableForm: boolean,
+    disabledButtom: boolean,
+    isloading: boolean,
+  } = initialState,
+  action: {type: string, payload?: mixed | {}},
+) => {
   switch (action.type) {
     case USER_REQUEST:
       return {
