@@ -24,13 +24,7 @@ type Props = {
   animateSpiner: boolean,
   editableForm: boolean,
   disabledButtom: boolean,
-  submCreditCard({
-    cardNumber: string,
-    expirationDate: string,
-    cvv: string,
-    firstName: string,
-    lastName: string,
-  }): {type: string, payload?: Object},
+  submCreditCard(State): {type: string, payload: State},
 };
 
 type State = {

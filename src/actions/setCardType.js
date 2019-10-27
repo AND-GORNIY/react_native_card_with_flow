@@ -1,8 +1,8 @@
 //@flow
 import {CHECK_TYPECARD} from '../types/types';
-type cardTypeAction = {type: string, payload: string};
+export type CardTypeAction = {type: string, payload: string};
 
-export const setCardType = (cardType: string): cardTypeAction => {
+export const setCardType = (cardType: string): CardTypeAction => {
   return {
     type: CHECK_TYPECARD,
     payload: cardType,

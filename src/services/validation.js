@@ -1,11 +1,13 @@
 //@flow
-export const validation = (data: {
+type UserInfo = {
   cardNumber: string,
   expirationDate: string,
   cvv: string,
   firstName: string,
   lastName: string,
-}): {
+};
+
+type ValidationReturn = {
   validationResult: boolean,
   validationFields: {
     cardNumberValid: boolean,
@@ -14,7 +16,9 @@ export const validation = (data: {
     firstNameValid: boolean,
     lastNameValid: boolean,
   },
-} => {
+};
+
+export const validation = (data: UserInfo): ValidationReturn => {
   const {cardNumber, expirationDate, cvv, firstName, lastName} = data;
   let cardNumberValid,
     expirationDateValid,

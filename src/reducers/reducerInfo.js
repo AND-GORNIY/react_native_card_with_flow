@@ -4,6 +4,39 @@ import {
   USER_RESPONSE_ERROR,
   CHECK_TYPECARD,
 } from '../types/types';
+import type {
+  UserRequestAction,
+  UserRespSuccAction,
+  UserRespErrAction,
+} from '../actions/submCreditCard';
+import type {CardTypeAction} from '../actions/setCardType';
+
+type Actions =
+  | UserRequestAction
+  | UserRespErrAction
+  | UserRespSuccAction
+  | CardTypeAction;
+
+type InitialState = {
+  cardNumber: string,
+  expirationDate: string,
+  cvv: string,
+  firstName: string,
+  lastName: string,
+  cardType: string,
+  validationResult: boolean,
+  validationFields: {
+    cardNumberValid: boolean,
+    expirationDateValid: boolean,
+    cvvValid: boolean,
+    firstNameValid: boolean,
+    lastNameValid: boolean,
+  },
+  animateSpiner: boolean,
+  editableForm: boolean,
+  disabledButtom: boolean,
+  isloading: boolean,
+};
 
 const initialState = {
   cardNumber: '',
@@ -27,27 +60,8 @@ const initialState = {
 };
 
 export const reducerInfo = (
-  state: {
-    cardNumber: string,
-    expirationDate: string,
-    cvv: string,
-    firstName: string,
-    lastName: string,
-    cardType: string,
-    validationResult: boolean,
-    validationFields: {
-      cardNumberValid: boolean,
-      expirationDateValid: boolean,
-      cvvValid: boolean,
-      firstNameValid: boolean,
-      lastNameValid: boolean,
-    },
-    animateSpiner: boolean,
-    editableForm: boolean,
-    disabledButtom: boolean,
-    isloading: boolean,
-  } = initialState,
-  action: {type: string, payload?: mixed | {}},
+  state: InitialState = initialState,
+  action: Actions,
 ) => {
   switch (action.type) {
     case USER_REQUEST:
