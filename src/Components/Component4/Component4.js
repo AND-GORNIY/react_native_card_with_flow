@@ -1,5 +1,4 @@
-//@flow
-import React, {Component} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Picker,
@@ -9,109 +8,81 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-type Props = {};
-type State = {
-  title: string,
-  weight: string,
-  size: string,
-  country: string,
-  isEditing: boolean,
-};
-class Componet4 extends Component<Props, State> {
-  state = {
-    title: '',
-    weight: '',
-    size: '',
-    country: '',
-    isEditing: true,
-  };
-  InputTitle = (title: string) => {
-    this.setState({title});
-  };
-  InputWeight = (weight: string) => {
-    this.setState({weight});
-  };
-  InputSize = (size: string) => {
-    this.setState({size});
-  };
-  InputPicker = (country: string) => {
-    this.setState({country: country});
-  };
-  PressSave = () => {
-    this.setState({isEditing: false});
-  };
-  PressEdit = () => {
-    this.setState({isEditing: true});
-  };
-  render() {
-    console.log(this.state);
-    const {isEditing, country, title, size, weight} = this.state;
-    return (
-      <SafeAreaView>
-        <View style={styles.GoodsCard}>
-          <Text style={styles.TextTitle}> Product Info </Text>
-          <Text style={styles.TextForFields}> Product title </Text>
-          <TextInput
-            placeholder={'title'}
-            style={styles.InputStyleTrue}
-            onChangeText={this.InputTitle}
-            maxLength={10}
-            editable={isEditing}
-          />
-          <Text style={styles.TextForFields}> Product weight </Text>
-          <TextInput
-            placeholder={'weight'}
-            style={styles.InputStyleTrue}
-            onChangeText={this.InputWeight}
-            maxLength={5}
-            editable={isEditing}
-          />
-          <Text style={styles.TextForFields}> Product size </Text>
-          <TextInput
-            placeholder={'size'}
-            style={styles.InputStyleTrue}
-            onChangeText={this.InputSize}
-            maxLength={8}
-            editable={isEditing}
-          />
-          <Text style={styles.TextForFields}> Сountry of manufacture </Text>
-          {isEditing ? (
-            <Picker
-              selectedValue={country}
-              style={styles.Picker}
-              onValueChange={this.InputPicker}
-              enabled={isEditing}>
-              <Picker.Item label="USA" value="USA" />
-              <Picker.Item label="UA" value="UA" />
-              <Picker.Item label="India" value="India" />
-              <Picker.Item label="GE" value="GE" />
-            </Picker>
-          ) : null}
-        </View>
-        <View style={styles.ButtonsDirection}>
-          <TouchableOpacity style={styles.Button} onPress={this.PressSave}>
-            <Text style={styles.TextButton}> Save </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.Button} onPress={this.PressEdit}>
-            <Text style={styles.TextButton}> Edit </Text>
-          </TouchableOpacity>
-        </View>
 
-        <View style={styles.VievInfo}>
-          {!isEditing ? (
-            <View>
-              <Text style={styles.TexInfo}>Title: {title}</Text>
-              <Text style={styles.TexInfo}>Weight: {weight}</Text>
-              <Text style={styles.TexInfo}>Size: {size}</Text>
-              <Text style={styles.TexInfo}>Country: {country}</Text>
-            </View>
-          ) : null}
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
-export default Componet4;
+const Component4 = ({
+  setInputData,
+  pressButton,
+  title,
+  weight,
+  size,
+  country,
+  isEditing,
+}) => {
+  return (
+    <SafeAreaView>
+      <View style={styles.GoodsCard}>
+        <Text style={styles.TextTitle}> Product Info </Text>
+        <Text style={styles.TextForFields}> Product title </Text>
+        <TextInput
+          placeholder={'title'}
+          style={styles.InputStyleTrue}
+          onChangeText={setInputData('title')}
+          maxLength={10}
+          editable={isEditing}
+        />
+        <Text style={styles.TextForFields}> Product weight </Text>
+        <TextInput
+          placeholder={'weight'}
+          style={styles.InputStyleTrue}
+          onChangeText={setInputData('weight')}
+          maxLength={5}
+          editable={isEditing}
+        />
+        <Text style={styles.TextForFields}> Product size </Text>
+        <TextInput
+          placeholder={'size'}
+          style={styles.InputStyleTrue}
+          onChangeText={setInputData('size')}
+          maxLength={8}
+          editable={isEditing}
+        />
+        <Text style={styles.TextForFields}> Сountry of manufacture </Text>
+        {isEditing ? (
+          <Picker
+            selectedValue={country}
+            style={styles.Picker}
+            onValueChange={setInputData('country')}
+            enabled={isEditing}>
+            <Picker.Item label="USA" value="USA" />
+            <Picker.Item label="UA" value="UA" />
+            <Picker.Item label="India" value="India" />
+            <Picker.Item label="GE" value="GE" />
+          </Picker>
+        ) : null}
+      </View>
+      <View style={styles.ButtonsDirection}>
+        <TouchableOpacity style={styles.Button} onPress={pressButton('Save')}>
+          <Text style={styles.TextButton}> Save </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.Button} onPress={pressButton('Edit')}>
+          <Text style={styles.TextButton}> Edit </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.VievInfo}>
+        {!isEditing ? (
+          <View>
+            <Text style={styles.TexInfo}>Title: {title}</Text>
+            <Text style={styles.TexInfo}>Weight: {weight}</Text>
+            <Text style={styles.TexInfo}>Size: {size}</Text>
+            <Text style={styles.TexInfo}>Country: {country}</Text>
+          </View>
+        ) : null}
+      </View>
+    </SafeAreaView>
+  );
+};
+export default Component4;
 
 const styles = StyleSheet.create({
   GoodsCard: {

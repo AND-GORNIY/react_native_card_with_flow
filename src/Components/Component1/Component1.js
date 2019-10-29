@@ -1,5 +1,4 @@
-//@flow
-import React, {Component} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,9 +8,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import Component3 from '../Component3/Component3';
-import {connect} from 'react-redux';
-import {submCreditCard} from '../../actions/submCreditCard';
+import Component3Container from '../Component3';
 
 type Props = {
   validationFields: {
@@ -24,156 +21,116 @@ type Props = {
   animateSpiner: boolean,
   editableForm: boolean,
   disabledButtom: boolean,
-  submCreditCard(State): {type: string, payload: State},
+  setInfoLocal: (val: string) => void,
+  onSubmit: void => void,
 };
 
-type State = {
-  cardNumber: string,
-  expirationDate: string,
-  cvv: string,
-  firstName: string,
-  lastName: string,
-};
+const Component1 = ({
+  validationFields,
+  animateSpiner,
+  editableForm,
+  disabledButtom,
+  onSubmit,
+  setInfoLocal,
+}: Props) => {
+  const {
+    cardNumberValid,
+    expirationDateValid,
+    cvvValid,
+    firstNameValid,
+    lastNameValid,
+  } = validationFields;
 
-class Component1 extends Component<Props, State> {
-  state = {
-    cardNumber: '',
-    expirationDate: '',
-    cvv: '',
-    firstName: '',
-    lastName: '',
-  };
+  return (
+    <SafeAreaView style={styles.FormContainer}>
+      <Text style={styles.Text}>Card info </Text>
 
-  onSubmit = () => {
-    this.props.submCreditCard(this.state);
-  };
+      <Text style={styles.Text}> CARD NUMBER </Text>
+      <TextInput
+        onChangeText={setInfoLocal('cardNumber')}
+        style={[
+          styles.InputStyleTrue,
+          cardNumberValid ? styles.borderStyleTrue : styles.borderStyleError,
+        ]}
+        maxLength={16}
+        placeholder={'****-****-****-****'}
+        editable={editableForm}
+      />
 
-  render() {
-    const {
-      cardNumberValid,
-      expirationDateValid,
-      cvvValid,
-      firstNameValid,
-      lastNameValid,
-    } = this.props.validationFields;
-    const {editableForm, disabledButtom, animateSpiner} = this.props;
-
-    return (
-      <SafeAreaView style={styles.FormContainer}>
-        <Text style={styles.Text}>Card info </Text>
-
-        <Text style={styles.Text}> CARD NUMBER </Text>
-        <TextInput
-          value={this.state.cardNumber}
-          onChangeText={cardNumber => this.setState({cardNumber})}
-          style={[
-            styles.InputStyleTrue,
-            cardNumberValid ? styles.borderStyleTrue : styles.borderStyleError,
-          ]}
-          maxLength={16}
-          placeholder={'****-****-****-****'}
-          editable={editableForm}
-        />
-
-        <View style={styles.thirdLine}>
-          <View>
-            <Text style={styles.Text}> EXP. DATE </Text>
-            <TextInput
-              value={this.state.expirationDate}
-              onChangeText={expirationDate => this.setState({expirationDate})}
-              style={[
-                styles.InputStyleTrue,
-                styles.thirdLineInput,
-                expirationDateValid
-                  ? styles.borderStyleTrue
-                  : styles.borderStyleError,
-              ]}
-              maxLength={5}
-              placeholder={'**/**'}
-              editable={editableForm}
-            />
-          </View>
-
-          <View>
-            <Text style={styles.Text}> CVV </Text>
-            <TextInput
-              value={this.state.cvv}
-              onChangeText={cvv => this.setState({cvv})}
-              style={[
-                styles.InputStyleTrue,
-                styles.thirdLineInput,
-                cvvValid ? styles.borderStyleTrue : styles.borderStyleError,
-              ]}
-              maxLength={4}
-              placeholder={'****'}
-              editable={editableForm}
-            />
-          </View>
+      <View style={styles.thirdLine}>
+        <View>
+          <Text style={styles.Text}> EXP. DATE </Text>
+          <TextInput
+            onChangeText={setInfoLocal('expirationDate')}
+            style={[
+              styles.InputStyleTrue,
+              styles.thirdLineInput,
+              expirationDateValid
+                ? styles.borderStyleTrue
+                : styles.borderStyleError,
+            ]}
+            maxLength={5}
+            placeholder={'**/**'}
+            editable={editableForm}
+          />
         </View>
 
-        <Text style={styles.Text}> NAME </Text>
-        <TextInput
-          value={this.state.firstName}
-          onChangeText={firstName => this.setState({firstName})}
-          style={[
-            styles.InputStyleTrue,
-            firstNameValid ? styles.borderStyleTrue : styles.borderStyleError,
-          ]}
-          maxLength={16}
-          editable={editableForm}
-        />
+        <View>
+          <Text style={styles.Text}> CVV </Text>
+          <TextInput
+            onChangeText={setInfoLocal('cvv')}
+            style={[
+              styles.InputStyleTrue,
+              styles.thirdLineInput,
+              cvvValid ? styles.borderStyleTrue : styles.borderStyleError,
+            ]}
+            maxLength={4}
+            placeholder={'****'}
+            editable={editableForm}
+          />
+        </View>
+      </View>
 
-        <Text style={styles.Text}> SURNAME </Text>
-        <TextInput
-          value={this.state.lastName}
-          onChangeText={lastName => this.setState({lastName})}
-          style={[
-            styles.InputStyleTrue,
-            lastNameValid ? styles.borderStyleTrue : styles.borderStyleError,
-          ]}
-          maxLength={16}
-          editable={editableForm}
-        />
+      <Text style={styles.Text}> NAME </Text>
+      <TextInput
+        onChangeText={setInfoLocal('firstName')}
+        style={[
+          styles.InputStyleTrue,
+          firstNameValid ? styles.borderStyleTrue : styles.borderStyleError,
+        ]}
+        maxLength={16}
+        editable={editableForm}
+      />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this.onSubmit}
-          disabled={disabledButtom}>
-          <Text style={styles.buttonText}> Submit </Text>
-        </TouchableOpacity>
-        <ActivityIndicator
-          size="large"
-          color="#00ff00"
-          animating={animateSpiner}
-          style={styles.spiner}
-        />
-        <Component3 />
-      </SafeAreaView>
-    );
-  }
-}
+      <Text style={styles.Text}> SURNAME </Text>
+      <TextInput
+        onChangeText={setInfoLocal('lastName')}
+        style={[
+          styles.InputStyleTrue,
+          lastNameValid ? styles.borderStyleTrue : styles.borderStyleError,
+        ]}
+        maxLength={16}
+        editable={editableForm}
+      />
 
-const mapStateToProps = store => {
-  return {
-    validationFields: store.userInfo.validationFields,
-    animateSpiner: store.userInfo.animateSpiner,
-    editableForm: store.userInfo.editableForm,
-    disabledButtom: store.userInfo.disabledButtom,
-  };
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onSubmit}
+        disabled={disabledButtom}>
+        <Text style={styles.buttonText}> Submit </Text>
+      </TouchableOpacity>
+      <ActivityIndicator
+        size="large"
+        color="#00ff00"
+        animating={animateSpiner}
+        style={styles.spiner}
+      />
+      <Component3Container />
+    </SafeAreaView>
+  );
 };
 
-const mapDispatchToprops = dispatch => {
-  return {
-    submCreditCard: userInfo => dispatch(submCreditCard(userInfo)),
-  };
-};
-
-const Component1Container = connect(
-  mapStateToProps,
-  mapDispatchToprops,
-)(Component1);
-
-export default Component1Container;
+export default Component1;
 
 const styles = StyleSheet.create({
   FormContainer: {

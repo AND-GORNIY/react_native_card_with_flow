@@ -38,7 +38,7 @@ type InitialState = {
   isloading: boolean,
 };
 
-const initialState = {
+const initialState: InitialState = {
   cardNumber: '',
   expirationDate: '',
   cvv: '',
@@ -62,7 +62,7 @@ const initialState = {
 export const reducerInfo = (
   state: InitialState = initialState,
   action: Actions,
-) => {
+): InitialState => {
   switch (action.type) {
     case USER_REQUEST:
       return {
